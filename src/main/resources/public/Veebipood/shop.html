@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css"/>
+</head>
+
+<!--====================================================================================-->
+
+<body>
+
+<div class="myDiv">
+    <h1>
+        <!--VIITED-->
+        <a href="index.html"><strong>E-pood</strong></a>
+        <a href="shop.html" class="navButton1" style="float: left">SHOP</a>
+        <a href="shoppingCart.html" class="navButton2" style="float: right">CART</a>
+        <a href="account.html" class="navButton2" style="float: right">Account</a>
+    </h1>
+</div>
+
+<div id="products_div" class="row">
+</div>
+
+<br>
+<br>
+<br>
+<br>
+
+<div class="footer">
+    <p><a href="about.html">About us</a>
+    </p>
+</div>
+
+<script>
+
+    fetch('getProductInfo/', {
+        method: 'GET'
+    }).then(function (response) {
+        // The API call was successful!
+        if (response.ok) {
+            return response.json();
+        } else {
+            return Promise.reject(response);
+        }
+    })
+        .then(function(jsonData) {
+            let info = "";
+            for (let i = 0; i < jsonData.length; i++) {
+                info = info + '    <div class="column">\n' +
+                    '        <div class="product-card">\n' +
+                    '            <div class="product-tumb">\n' +
+                    '                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Antu_insert-image.svg/512px-Antu_insert-image.svg.png" alt="">\n' +
+                    '            </div>\n' +
+                    '            <div class="product-details">\n' +
+                    '                <span class="product-catagory">'+jsonData[i].categoryId+'</span>\n' +
+                    '                <h4><a href="">'+jsonData[i].nameShort+'</a></h4>\n' +
+                    '                <p>'+jsonData[i].nameLong+'</p>\n' +
+                    '                <div class="product-bottom-details">\n' +
+                    '                    <div class="product-price">€'+jsonData[i].price+'</div>\n' +
+                    '                    <div class="product-links">\n' +
+                    '                        <a href=""><i class="fa fa-heart"></i></a>\n' +
+                    '                        <a href=""><i class="fa fa-shopping-cart"></i></a>\n' +
+                    '                    </div>\n' +
+                    '                    <p>\n' +
+                    '                        <button onclick="addItemToCart('+jsonData[i].id+', 1)" type="addItemToCart" class="addItemToCart">Add to Cart</button>\n' +
+                    '                    </p>\n' +
+                    '                </div>\n' +
+                    '            </div>\n' +
+                    '        </div>\n' +
+                    '    </div>';
+            }
+            document.getElementById("products_div").innerHTML = info;
+        })
+        .catch(function (err) {
+            // There was an error
+            console.warn('Something went wrong.', err);
+        })
+
+
+
+    function addItemToCart(productId, quantity) {
+        fetch("addItemToCart/", {
+            method: 'PUT',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                productId: productId,
+                quantity: quantity
+            })
+        })
+    }
+
+
+</script>
+
+</body>
+</html>
+

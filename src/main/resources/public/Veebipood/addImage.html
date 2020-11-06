@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css"/>
+</head>
+
+<!--====================================================================================-->
+
+<body>
+
+<div class="myDiv">
+    <h1>
+        <!--VIITED-->
+        <a href="index.html"><strong>E-pood</strong></a>
+        <a href="shop.html" class="navButton1" style="float: left">SHOP</a>
+        <a href="shoppingCart.html" class="navButton2" style="float: right">CART</a>
+        <a href="account.html" class="navButton2" style="float: right">Account</a>
+        <a href="addproduct.html" class="navButton1" style="float: right">Add product</a>
+        <a href="addImage.html" class="navButton1" style="float: right">Add image</a>
+    </h1>
+</div>
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+  <div class="center">
+        <h2> ADD PICTURE </h2>
+        <p>
+        <form id="formElem">
+            <input type="text" placeholder="Pildi id" name="firstName">
+            Picture: <input type="file" name="picture" accept="image/*">
+            <input type="submit">
+        </form>
+        </p>
+    </div>
+
+<script>
+    formElem.onsubmit = async (e) => {
+        e.preventDefault();
+
+        let response = await fetch('/article/formdata/post/user-avatar', {
+            method: 'POST',
+            body: new FormData(formElem)
+        });
+
+        let result = await response.json();
+
+        alert(result.message);
+    };
+</script>
+
+</body>
+</html>
+

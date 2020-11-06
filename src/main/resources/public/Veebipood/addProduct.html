@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css"/>
+</head>
+
+<!--====================================================================================-->
+
+<body>
+
+<div class="myDiv">
+    <h1>
+        <!--VIITED-->
+        <a href="index.html"><strong>E-pood</strong></a>
+        <a href="shop.html" class="navButton1" style="float: left">SHOP</a>
+        <a href="shoppingCart.html" class="navButton2" style="float: right">CART</a>
+        <a href="account.html" class="navButton2" style="float: right">Account</a>
+        <a href="addproduct.html" class="navButton1" style="float: right">Add product</a>
+        <a href="addImage.html" class="navButton1" style="float: right">Add image</a>
+    </h1>
+</div>
+
+
+<br/>
+<br/>
+<br/>
+
+<form action="">
+    <p style="color:white">
+
+        <label for="serial">Product serial:</label>
+        <input type="text" placeholder="Serial" id="serial" name="serial"><br>
+
+        <label for="name_short">Name:</label>
+        <input type="text" placeholder="Name" id="name_short" name="name_short"><br>
+
+        <label for="name_long">Description:</label>
+        <input type="text" placeholder="Description" id="name_long" name="name_long"><br>
+        <!--Category DROP DOWN-->
+        <label for="category_id_output">Category:</label>
+        <select id="category_id_output" name="category_id_output">
+        </select><br>
+
+        <label for="colour">Colour:</label>
+        <input type="text" placeholder="Colour" id="colour" name="colour"><br>
+
+        <label for="size">Size:</label>
+        <input type="text" placeholder="Size" id="size" name="size"><br>
+
+        <label for="gender">Gender:</label><
+        <input type="text" placeholder="Gender" id="gender" name="gender"><br>
+
+        <label for="quantity">Quantity:</label>
+        <input type="text" placeholder="Quantity" id="quantity" name="quantity"><br>
+
+        <label for="brand">Brand:</label>
+        <input type="text" placeholder="Brand" id="brand" name="brand"><br>
+
+        <label for="price">Price:</label>
+        <input type="text" placeholder="Price" id="price" name="price"><br>
+
+        <button id="submit" type="button" class="submit">
+            Submit
+        </button>
+        <br>
+        <br>
+        <br>
+        <br>
+</form>
+</p>
+
+<div class="footer">
+    <p><a href="about.html">About us</a></p>
+</div>
+
+<script>
+    window.onload = function () {
+        fetch("getCategory/", {
+            method: 'GET',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (jsonData) {
+                let selectBoxInnerHtml = "";
+                for (let i = 0; i < jsonData.length; i++) {
+                    selectBoxInnerHtml = selectBoxInnerHtml + '<option value="' + jsonData[i].id + '">' + jsonData[i].name + "</option>";
+                }
+                document.getElementById("category_id_output").innerHTML = selectBoxInnerHtml;
+            })
+            .catch(function (err) {
+                console.log(err);
+            })
+    }
+
+    let serial = document.getElementById("serial");
+    let name_short = document.getElementById("name_short");
+    let name_long = document.getElementById("name_long");
+    let category_id_output = document.getElementById("category_id_output");
+    let colour = document.getElementById("colour");
+    let size = document.getElementById("size");
+    let gender = document.getElementById("gender");
+    let quantity = document.getElementById("quantity");
+    let brand = document.getElementById("brand");
+    let price = document.getElementById("price");
+    let submit = document.getElementById("submit");
+    submit.onclick = function () {
+        fetch("insertProduct/", {
+            method: 'PUT',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                serial: serial.value,
+                nameShort: name_short.value,
+                nameLong: name_long.value,
+                categoryId: category_id_output.value,
+                colour: colour.value,
+                size: size.value,
+                gender: gender.value,
+                quantity: quantity.value,
+                brand: brand.value,
+                price: price.value,
+            })
+        })
+
+    };
+
+</script>
+
+
+</body>
+</html>
+

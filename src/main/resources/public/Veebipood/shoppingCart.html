@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css"/>
+</head>
+
+<!--====================================================================================-->
+
+<body>
+
+<div class="myDiv">
+    <h1>
+        <!--VIITED-->
+        <a href="index.html"><strong>E-pood</strong></a>
+        <a href="shop.html" class="navButton1" style="float: left">SHOP</a>
+        <a href="shoppingCart.html" class="navButton2" style="float: right">CART</a>
+        <a href="account.html" class="navButton2" style="float: right">Account</a>
+    </h1>
+</div>
+
+<!--<div class="col-25">-->
+<!--    <div class="container">-->
+<!--        <h4>Cart-->
+<!--            <span class="price" style="color:black">-->
+<!--          <i class="fa fa-shopping-cart"></i>-->
+<!--          <b>4</b>-->
+<!--        </span>-->
+<!--        </h4>-->
+<!--        <p><a href="#">'+jsonData[i].name_short+'</a> <span class="price">€'+jsonData[i].price+'</span></p>-->
+<!--        <p><a href="#">Product 2</a> <span class="price">$5</span></p>-->
+<!--        <p><a href="#">Product 3</a> <span class="price">$8</span></p>-->
+<!--        <p><a href="#">Product 4</a> <span class="price">$2</span></p>-->
+<!--        <hr>-->
+<!--        <p>Total <span class="price" style="color:black"><b>$30</b></span></p>-->
+<!--    </div>-->
+<div id="cart_div" class="row">
+</div>
+
+<br>
+<br>
+<br>
+
+<div>
+    <!--    <button href="checkout.html" class="checkout">Checkout</button>-->
+    <a href="checkout.html" class="navButton2" style="float: right">Checkout</a>
+
+</div>
+
+
+<br>
+<br>
+<br>
+
+<div class="footer">
+    <p><a href="about.html">About us</a></p>
+</div>
+
+
+<script>
+
+    fetch('getCartItemList/', {
+        method: 'GET'
+    }).then(function (response) {
+        // The API call was successful!
+        if (response.ok) {
+            return response.json();
+        } else {
+            return Promise.reject(response);
+        }
+    })
+        .then(function (jsonData) {
+            let info = "";
+            for (let i = 0; i < jsonData.length; i++) {
+                info = info + '    <div class="col-25">\n' +
+                    '        <div class="container">\n' +
+                    '            <h4>' + jsonData[i].nameShort + '\n' +
+                    '                <span class="price" style="color:black">' + jsonData[i].quantity + '\n' +
+                    '               <i class="fa fa-shopping-cart"></i> ' +
+                    '                </span>' +
+                    '                    </h4>' +
+                    '                    <div class="product-links">\n' +
+                    '                        <p><a href="#">' + jsonData[i].nameShort + '</a> <span class="price">€' + jsonData[i].totalPrice + '</span></p>' +
+                    ' <div class="product-removal">' +
+                    '<button class="remove-product">' +
+                    '  Remove ' +
+                    ' </button>' +
+                    '</div>' +
+                    '                    </div>' +
+                    '        </div>\n' +
+                    '    </div>';
+            }
+            document.getElementById("cart_div").innerHTML = info;
+
+
+        })
+        .catch(function (err) {
+            // There was an error
+            console.warn('Something went wrong.', err);
+        })
+
+    // fetch('removeItemFromCart/', {
+    //     method: 'PUT'
+    // }).then(function (response) {
+    //     // The API call was successful!
+    //     if (response.ok) {
+    //         return response.json();
+    //     } else {
+    //         return Promise.reject(response);
+    //     }
+    // })
+    //     .then(function (jsonData) {
+    //         let info = "";
+    //         for (let i = 0; i < jsonData.length; i++) {
+    //             info = info + '    <div class="col-25">\n' +
+    //                 '        <div class="container">\n' +
+    //                 '            <h4>Cart\n' +
+    //                 '                <span class="price" style="color:black">' + jsonData[i].quantity + '\n' +
+    //                 '               <i class="fa fa-shopping-cart"></i> ' +
+    //                 '                </span>' +
+    //                 '                    </h4>' +
+    //                 '                    <div class="product-links">\n' +
+    //                 '                        <p><a href="#">' + jsonData[i].nameShort + '</a> <span class="price">€' + jsonData[i].price + '</span></p>' +
+    //                 ' <div class="product-removal">' +
+    //                 '<button class="remove-product">' +
+    //                 '  Remove ' +
+    //                 ' </button>' +
+    //                 '</div>' +
+    //                 '                    </div>' +
+    //                 '        </div>\n' +
+    //                 '    </div>';
+    //         }
+    //         document.getElementById("cart_div").innerHTML = info;
+    //
+    //     })
+    //     .catch(function (err) {
+    //         // There was an error
+    //         console.warn('Something went wrong.', err);
+    //     })
+
+</script>
+
+</body>
+</html>
+

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet author="madvat" id="changelog-1.0">
+
+<!--ACCOUNT-->
+        <createTable tableName="account">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="first_name" type="text">
+            </column>
+            <column name="last_name" type="text">
+            </column>
+            <column name="gender" type="text">
+            </column>
+            <column name="role" type="text">
+            </column>
+            <column name="password" type="text">
+            </column>
+            <column name="active" type="boolean">
+            </column>
+            <column name="user_name" type="text">
+            </column>
+        </createTable>
+<!--PRODUCT-->
+        <createTable tableName="product">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="serial" type="text">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="name_short" type="text">
+            </column>
+            <column name="name_long" type="text">
+            </column>
+            <column name="category_id" type="bigint">
+            </column>
+            <column name="colour" type="text">
+            </column>
+            <column name="size" type="text">
+            </column>
+            <column name="gender" type="text">
+            </column>
+            <column name="brand" type="text">
+            </column>
+            <column name="quantity" type="numeric">
+            </column>
+            <column name="price" type="numeric">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+<!--PRODUCT_IMAGE-->
+        <createTable tableName="product_image">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="product_id" type="bigint">
+                <constraints foreignKeyName="fk_product_pic" references="product(id)"/>
+            </column>
+            <column name="image" type="blob">
+            </column>
+        </createTable>
+<!--ORDER-->
+        <createTable tableName="order">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="account_id" type="bigint">
+                <constraints foreignKeyName="fk_account_id" references="account(id)"/>
+            </column>
+            <column name="total_price" type="numeric">
+            </column>
+            <column name="date" type="datetime">
+            </column>
+            <column name="shipped_date" type="datetime">
+            </column>
+        </createTable>
+<!--ORDER_ITEM-->
+        <createTable tableName="order_item">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="product_id" type="bigint">
+                <constraints foreignKeyName="fk_item_to_product" references="product(id)"/>
+            </column>
+            <column name="order_id" type="bigint">
+                <constraints foreignKeyName="fk_item_to_order" references="order(id)"/>
+            </column>
+            <column name="price" type="numeric">
+            </column>
+            <column name="quantity" type="bigint">
+            </column>
+            <column name="total_price" type="numeric">
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="madvat" id="2020-09-21 add table categ and role">
+<!--CATEGORY-->
+        <createTable tableName="category">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="name" type="text">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+<!--ROLE-->
+        <createTable tableName="role">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="value" type="text">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+<!--FK_categroy_id'le-->
+        <addForeignKeyConstraint baseTableName="product" baseColumnNames="category_id" constraintName="fk_product_category" referencedTableName="category"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet author="madvat" id="2020-09-28 add table cart_item">
+
+<!--CART_ITEM-->
+        <createTable tableName="cart_item">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="product_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_cartItem_to_productId" references="product(id)"/>
+            </column>
+            <column name="account_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_cartItem_to_accountId" references="account(id)"/>
+            </column>
+            <column name="quantity" type="bigint">
+            </column>
+            <column name="price" type="numeric">
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

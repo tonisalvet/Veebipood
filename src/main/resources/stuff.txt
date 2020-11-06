@@ -1,0 +1,16 @@
+"id" type="bigint" 
+"serial" type="text"
+"name_short" type="text"
+"name_long" type="text"
+"category_id" type="bigint"
+"colour" type="text"
+"size" type="text"
+"gender" type="text"
+"brand" type="text"
+"quantity" type="numeric"
+"price" type="numeric"
+
+
+window.onload=function(){
+        alert("kirjuta kood siia");
+    }

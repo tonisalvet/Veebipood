@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css"/>
+</head>
+
+<!--====================================================================================-->
+
+<body>
+
+<div class="myDiv">
+    <h1>
+        <!--VIITED-->
+        <a href="index.html"><strong>E-pood</strong></a>
+        <a href="shop.html" class="navButton1" style="float: left">SHOP</a>
+        <a id="cartButton" href="shoppingCart.html" class="navButton2"
+           style="float: right; visibility: hidden;">CART</a>
+        <a href="account.html" class="navButton2" style="float: right">Account</a>
+        <!--    <a href="product.html" class="navButton1" style="float: right">Add product</a>-->
+    </h1>
+</div>
+
+
+<br/>
+<br/>
+<br/>
+<br/>
+
+<div id="over" style="position:absolute; width:100%; height:100%">
+    <img src="https://i.imgur.com/lGhKXm7.png">
+</div>
+
+<div id="container">
+    <div id="header"></div>
+    <div id="body"></div>
+    <div id="footer"></div>
+</div>
+
+
+<div class="footer">
+    <p><a href="about.html">About us</a></p>
+</div>
+
+<script>
+    fetch('userStatus',
+        {
+            method: 'GET',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type':
+                    'application/json'
+            }
+        }
+    )
+        .then(function (data) {
+            return data.json()
+        })
+        .then(function (jsonData) {
+            let cartButton = document.getElementById("cartButton");
+            if (jsonData.loggedIn) {
+                cartButton.style.visibility = "visible";
+            }
+        })
+        .catch(function (err) {
+            console.log(err);
+        })
+
+
+</script>
+</body>
+
+</html>
+
